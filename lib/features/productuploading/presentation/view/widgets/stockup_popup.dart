@@ -7,20 +7,15 @@ import 'package:totalxtest/features/home/presentation/view/home_screen.dart';
 import 'package:totalxtest/features/productuploading/data/model/i_product_model.dart';
 import 'package:totalxtest/features/productuploading/presentation/provider/product_provider.dart';
 
-void stockUpdatePopup(
-  BuildContext context,
-  ProductModel pro,
-   {
-  formKey,
-   required String userId,
-   required String productId,
-  String? productName,
-  int? productStock
-}) {
-    context.read<ProductProvider>().setStockValue(pro.stock);
+void stockUpdatePopup(BuildContext context, ProductModel pro,
+    {formKey,
+    required String userId,
+    required String productId,
+    String? productName,
+    int? productStock}) {
+  context.read<ProductProvider>().setStockValue(pro.stock);
 
   showDialog(
-    
     context: context,
     builder: (context) {
       return Dialog(
@@ -28,8 +23,6 @@ void stockUpdatePopup(
           borderRadius: BorderRadius.circular(20),
         ),
         child: Consumer<ProductProvider>(builder: (context, product, child) {
-          
-
           return SingleChildScrollView(
             child: Container(
               width: 300,
@@ -37,7 +30,8 @@ void stockUpdatePopup(
               padding: const EdgeInsets.all(10),
               child: Form(
                 key: formKey,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Update Stock",
@@ -99,26 +93,33 @@ void stockUpdatePopup(
                             color: Colors.blue,
                             textColor: Colors.white,
                             onPressed: () async {
-                                log("stockk11");
+                              log("stockk11");
                               if (formKey.currentState!.validate()) {
                                 final navi = Navigator.of(context);
                                 log("stockk22");
                                 // showProgress(context);
-                                                int stockChange = int.tryParse(
-                        context.read<ProductProvider>().updateStockController.text) ??
-                    0;
-                    log("stockk33");
-                if (!context.read<ProductProvider>().isIncrease) {
-                  stockChange = -stockChange; // Negate the value if decrement
-                }
-                 log("stockk44");
+                                int stockChange = int.tryParse(context
+                                        .read<ProductProvider>()
+                                        .updateStockController
+                                        .text) ??
+                                    0;
+                                log("stockk33");
+                                if (!context
+                                    .read<ProductProvider>()
+                                    .isIncrease) {
+                                  stockChange =
+                                      -stockChange; // Negate the value if decrement
+                                }
+                                log("stockk44");
 
-                context.read<ProductProvider>().updateProductStock(
-                  userId: userId,
-                  productId: pro.id!,
-                  stockValue: stockChange,
-                );
-                  log("stockk55");
+                                context
+                                    .read<ProductProvider>()
+                                    .updateProductStock(
+                                      userId: userId,
+                                      productId: pro.id!,
+                                      stockValue: stockChange,
+                                    );
+                                log("stockk55");
 
                                 // navi.pop();
                               }

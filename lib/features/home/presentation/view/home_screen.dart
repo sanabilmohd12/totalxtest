@@ -245,11 +245,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     trailing: TextButton(
                         onPressed: () {
-
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProductScreen(userId: prov.userList[index].id!,),
+                                builder: (context) => ProductScreen(
+                                  userId: prov.userList[index].id!,
+                                ),
                               ));
                         },
                         child: Text("View Products")),

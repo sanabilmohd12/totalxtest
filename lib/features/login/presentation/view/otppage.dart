@@ -36,8 +36,8 @@ class otpPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               defaultPinTheme: PinTheme(
-                  textStyle:
-                      const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                  textStyle: const TextStyle(
+                      color: Colors.red, fontWeight: FontWeight.bold),
                   height: 40,
                   width: 40,
                   decoration: BoxDecoration(

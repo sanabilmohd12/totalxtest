@@ -98,12 +98,10 @@ class ProductProvider extends ChangeNotifier {
     _fetchProducts(userId: userId);
   }
 
-
-void toggleStockUpdate(bool value) {
+  void toggleStockUpdate(bool value) {
     isIncrease = value;
-    notifyListeners();  
+    notifyListeners();
   }
-
 
   void setStockValue(int stock) {
     updateStockController.text = stock.toString();
@@ -125,8 +123,4 @@ void toggleStockUpdate(bool value) {
     }, (r) {});
     notifyListeners();
   }
-
-
-
-
 }

@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:totalxtest/features/home/presentation/view/home_screen.dart';
 import 'package:totalxtest/features/login/presentation/view/otppage.dart';
 
-
 class Loginprovider extends ChangeNotifier {
   TextEditingController loginnumber = TextEditingController();
   TextEditingController otpcontroller = TextEditingController();

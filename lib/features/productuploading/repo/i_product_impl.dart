@@ -87,19 +87,17 @@ class IProductImpl implements IProductFacade {
   Future<Either<MainFailure, void>> updateProductStock({
     required String userId,
     required String productId,
-    required int
-        stockValue, 
+    required int stockValue,
   }) async {
     try {
       final userRef =
           firestore.collection(FirebaseCollections.users).doc(userId);
 
-      
       await userRef.update({
         'product.$productId.stock': FieldValue.increment(stockValue),
       });
 
-      return right(null); 
+      return right(null);
     } catch (e) {
       return left(MainFailure.serverFailure(errorMessage: e.toString()));
     }

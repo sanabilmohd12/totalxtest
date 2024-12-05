@@ -15,14 +15,11 @@ class MainProvider extends ChangeNotifier {
 
   int sortedOption = 0;
 
-  
   bool isFetching = false;
-
 
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController searchController = TextEditingController();
-  
 
   // Future<void> uploadUser(
   //   BuildContext context, {
@@ -66,10 +63,6 @@ class MainProvider extends ChangeNotifier {
       (err) {
         log(err.errorMessage);
         onFailure.call();
-
-
-
-
       },
       (success) {
         cleartextfield();
@@ -111,17 +104,20 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
     final result =
         await iUserfacade.fetchUser(filterOlder: filterOlder, search: search);
-        result.fold((err) {
-          log(err.errorMessage);
-        }, (success) {
-          userList.addAll(success);
-        },);
-        isFetching=false;
-        notifyListeners();
+    result.fold(
+      (err) {
+        log(err.errorMessage);
+      },
+      (success) {
+        userList.addAll(success);
+      },
+    );
+    isFetching = false;
+    notifyListeners();
   }
 
   void clearuserList() {
-   iUserfacade.clearData();
+    iUserfacade.clearData();
     userList = [];
     notifyListeners();
   }
@@ -229,11 +225,4 @@ class MainProvider extends ChangeNotifier {
 
 //   return querySnapshot.docs.map((doc) => UserModel.fromFirestore(doc)).toList();
 // }
-
-
- 
-
-
-
-
 }

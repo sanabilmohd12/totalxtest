@@ -7,14 +7,14 @@ class UserModel {
   String name;
   int age;
   Timestamp createdAt;
-  List<String> searchKeywords; 
+  List<String> searchKeywords;
 
   UserModel({
-     this.id,
+    this.id,
     required this.name,
     required this.age,
     required this.createdAt,
-    this.searchKeywords = const [], 
+    this.searchKeywords = const [],
   });
 
   Map<String, dynamic> toMap() {
@@ -23,21 +23,19 @@ class UserModel {
       'name': name,
       'age': age,
       'createdAt': createdAt,
-      'searchKeywords': searchKeywords, 
+      'searchKeywords': searchKeywords,
     };
   }
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id'] != null ?  map['id'] as String : null,
+      id: map['id'] != null ? map['id'] as String : null,
       name: map['name'] as String,
       age: map['age'] as int,
       createdAt: map['createdAt'] as Timestamp,
-      searchKeywords: List<String>.from(map['searchKeywords'] ?? []), 
+      searchKeywords: List<String>.from(map['searchKeywords'] ?? []),
     );
   }
-
-
 
   UserModel copyWith({
     String? id,

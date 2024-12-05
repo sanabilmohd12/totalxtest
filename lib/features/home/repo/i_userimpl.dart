@@ -25,27 +25,24 @@ class IUserimpl implements IUserfacade {
       await userRef.doc(id).set(user.toMap());
 
       return right(user);
-
-
     } catch (e) {
       return left(MainFailure.serverFailure(errorMessage: e.toString()));
     }
   }
-   
-   
-    DocumentSnapshot? lastDocument;
+
+  DocumentSnapshot? lastDocument;
   bool noMoreData = false;
-  
+
   @override
-  Future<Either<MainFailure, List<UserModel>>> fetchUser({int? filterOlder, String? search})async {
-    if(noMoreData)return right([]);
-  try {
-    
-    Query query = firestore
+  Future<Either<MainFailure, List<UserModel>>> fetchUser(
+      {int? filterOlder, String? search}) async {
+    if (noMoreData) return right([]);
+    try {
+      Query query = firestore
           .collection(FirebaseCollections.users)
           .orderBy("age", descending: true);
 
- if (filterOlder != null) {
+      if (filterOlder != null) {
         // log("filter$filterOlder");
         if (filterOlder == 1) {
           query = query.where('age', isLessThanOrEqualTo: 40);
@@ -61,34 +58,32 @@ class IUserimpl implements IUserfacade {
             arrayContains: search.replaceAll(" ", "").toLowerCase());
       }
 
-if (lastDocument != null) {
+      if (lastDocument != null) {
         query = query.startAfterDocument(lastDocument!);
       }
 
-final querySnapshot = await query.limit(15).get();
+      final querySnapshot = await query.limit(15).get();
 
-
-      if (querySnapshot.docs.length<15) {
+      if (querySnapshot.docs.length < 15) {
         noMoreData = true;
-      }else{
-       lastDocument = querySnapshot.docs.last; 
+      } else {
+        lastDocument = querySnapshot.docs.last;
       }
 
- final newlist = querySnapshot.docs
-            .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>))
-            .toList();
-            log("sswsw${newlist.length}");
+      final newlist = querySnapshot.docs
+          .map((doc) => UserModel.fromMap(doc.data() as Map<String, dynamic>))
+          .toList();
+      log("sswsw${newlist.length}");
 
-return right(newlist);
+      return right(newlist);
+    } catch (e) {
+      return left(MainFailure.serverFailure(errorMessage: e.toString()));
+    }
+  }
 
-  } catch (e) {
-    return left(MainFailure.serverFailure(errorMessage: e.toString()));
-  }
-  }
-  
   @override
   void clearData() {
-   lastDocument =null;
-   noMoreData= false;
+    lastDocument = null;
+    noMoreData = false;
   }
 }
