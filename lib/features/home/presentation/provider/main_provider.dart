@@ -139,17 +139,17 @@ class MainProvider extends ChangeNotifier {
       int? option,
       String? search}) async {
     clearuserList();
-    if (search!.isNotEmpty) {
+    // if (search!.isNotEmpty) {
       initData(
         scrollController: scrollController,
       );
 
       log("seerched${userList.length}");
-    } else {
-      initData(
-        scrollController: scrollController,
-      );
-    }
+    // } else {
+    //   initData(
+    //     scrollController: scrollController,
+    //   );
+    // }
     notifyListeners();
   }
 
