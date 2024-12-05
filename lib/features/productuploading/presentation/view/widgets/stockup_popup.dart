@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:totalxtest/features/home/presentation/view/home_screen.dart';
 import 'package:totalxtest/features/productuploading/data/model/i_product_model.dart';
 import 'package:totalxtest/features/productuploading/presentation/provider/product_provider.dart';
+import 'package:totalxtest/general/widgets/loader_animation.dart';
 
 void stockUpdatePopup(BuildContext context, ProductModel pro,
     {formKey,
@@ -68,6 +69,15 @@ void stockUpdatePopup(BuildContext context, ProductModel pro,
                         if (value == null || value.isEmpty) {
                           return 'Please enter how much Stock is there';
                         }
+                        final numValue = int.tryParse(value);
+                        if (numValue == null) {
+                          return 'Please enter a valid number';
+                        }
+
+                        if (product.isIncrease == false &&
+                            numValue > productStock) {
+                          return "Can't decrease more than $productStock";
+                        }
 
                         return null;
                       },
@@ -97,31 +107,27 @@ void stockUpdatePopup(BuildContext context, ProductModel pro,
                               if (formKey.currentState!.validate()) {
                                 final navi = Navigator.of(context);
                                 log("stockk22");
-                                // showProgress(context);
-                                int stockChange = int.tryParse(context
-                                        .read<ProductProvider>()
-                                        .updateStockController
-                                        .text) ??
-                                    0;
+                                showProgress(context);
+
+                                int stockChange = int.tryParse(
+                                        product.updateStockController.text) ?? 0;
                                 log("stockk33");
-                                if (!context
-                                    .read<ProductProvider>()
-                                    .isIncrease) {
-                                  stockChange =
-                                      -stockChange; // Negate the value if decrement
+                                if (!product.isIncrease) {
+                                  stockChange = -stockChange;
                                 }
                                 log("stockk44");
 
-                                context
-                                    .read<ProductProvider>()
-                                    .updateProductStock(
-                                      userId: userId,
-                                      productId: pro.id!,
-                                      stockValue: stockChange,
-                                    );
+                               await product.updateProductStock(
+                                  userId: userId,
+                                  productId: pro.id!,
+                                  stockValue: stockChange,
+                                );
+                                
+                              
                                 log("stockk55");
 
-                                // navi.pop();
+                                navi.pop();
+                                navi.pop();
                               }
                             },
                           ),

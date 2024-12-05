@@ -118,9 +118,11 @@ class ProductProvider extends ChangeNotifier {
       productId: productId,
       stockValue: stockValue,
     );
-    result.fold((l) {
-      log(l.errorMessage);
-    }, (r) {});
+    result.fold((err) {
+      log(err.errorMessage);
+    }, (success) {
+
+    });
     notifyListeners();
   }
 }
